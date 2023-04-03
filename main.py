@@ -4,7 +4,7 @@
 import sys
 
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout,
-                             QMessageBox) # QMessageBox : MessageBox Widget
+                             QMessageBox, QPlainTextEdit) # QMessageBox : MessageBox Widget
 from PyQt5.QtGui import QIcon   # library to add icon
 
 class Calculator(QWidget):  # define a class inherited QWidget class
@@ -14,11 +14,14 @@ class Calculator(QWidget):  # define a class inherited QWidget class
         self.initUI()   # initialize remains in initUI function
 
     def initUI(self):
+        self.te1 = QPlainTextEdit() # create text edit widget
+        self.te1.setReadOnly(True)  # modify text edit widget for read only
+
         self.btn1 = QPushButton('Message', self)    # add button
         self.btn1.clicked.connect(self.activateMessage) # connect handler function when button clicked
 
         vbox=QVBoxLayout()  # create vertical layout widget
-        vbox.addStretch(1)  # empty space
+        vbox.addWidget(self.te1)    # add text edit widget at vertial layout
         vbox.addWidget(self.btn1)   # button location
         vbox.addStretch(1)  # empty space
 
@@ -29,8 +32,9 @@ class Calculator(QWidget):  # define a class inherited QWidget class
         self.resize(256, 256)   # window size
         self.show() # call for window display
 
-    def activateMessage(self): # function when button clicked: Message Box output
-        QMessageBox.information(self, "information", "Button clicked!")
+    def activateMessage(self): # modify handler function: to output message in text edit
+        # QMessageBox.information(self, "information", "Button clicked!")
+        self.te1.appendPlainText("Button clicked!")
 
 
 if __name__ == '__main__':  # pyqt needs 1 QApplication per appplication
